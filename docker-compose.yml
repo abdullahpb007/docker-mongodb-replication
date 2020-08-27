@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  # MONGODB
+  mongo:
+    image: mongo
+    hostname: mongo.myrepl
+    ports:
+      - 3010:27017
+    networks:
+      default:
+        aliases:
+          - mongo.myrepl
+    command:
+      - --storageEngine
+      - wiredTiger
+      - --replSet
+      - myrepl
+    depends_on:
+      - mongo-2
+      - mongo-3
+
+  # MONGODB-2
+  mongo-2:
+    image: mongo
+    hostname: mongo-2.myrepl
+    networks:
+      default:
+        aliases:
+          - mongo-2.myrepl
+    command:
+      - --storageEngine
+      - wiredTiger
+      - --replSet
+      - myrepl
+  # MONGODB-3
+  mongo-3:
+    image: mongo
+    hostname: mongo-3.myrepl
+    networks:
+      default:
+        aliases:
+          - mongo-3.myrepl
+    command:
+      - --storageEngine
+      - wiredTiger
+      - --replSet
+      - myrepl
